@@ -3,6 +3,7 @@
 #include"malloc.h"
 #include"math.h"
 #include"stdlib.h"
+
 void GenerateString(int n, char* string){
         char *prev;
         char *new;
@@ -16,6 +17,7 @@ void GenerateString(int n, char* string){
                 strcat(string, new);
                 strcat(string, prev);
                 strcpy(prev, string);
+                // вывод нужно вынести из тела этой ф-и
                 printf("%s\n", string);
         }
         free(prev);
