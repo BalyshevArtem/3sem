@@ -12,7 +12,6 @@ void Split(char* string,char* delimiters,char*** tokens,int* tokensCount){
 		(*tokensCount)++;
 		(*tokens)[*tokensCount] = strtok(NULL, delimiters);
 	}
-
 }
 
 int main(){
@@ -33,6 +32,4 @@ int main(){
 	free(tokens);
 	return 0;
 }
-
-
 
