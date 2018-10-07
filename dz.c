@@ -5,6 +5,10 @@
 #include<sys/wait.h>
 #include<sys/types.h>
 #include<assert.h>
+
+// Код буквально посимвольно совпадает с тем, что прислал Аршанский Алексей.
+// Упражнение не засчитаывается.
+
 #define Max_size 100
 #define Max_Time 5
 
