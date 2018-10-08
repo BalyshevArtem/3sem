@@ -1,12 +1,14 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+
+// FIXIT: Называйте, пожалуйста, константы вида #define ... в таком стиле: #define MAX_SIZE 100
 #define Max_size 100
 
-void Split(char* string,char* delimiters,char*** tokens,int* tokensCount){
-	
+void Split(char* string,char* delimiters,char*** tokens,int* tokensCount)
+{	
 	int len = strlen(string);
-	(*tokensCount) = 0;
+	*tokensCount = 0;
 	(*tokens)[*tokensCount] = strtok(string, delimiters);
 	while((*tokens)[*tokensCount] != NULL){
 		(*tokensCount)++;
