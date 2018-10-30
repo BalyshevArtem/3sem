@@ -9,70 +9,47 @@
 
 #define MaxSize 1024
 
-// FIXIT: общее замечание: много дублирующихся (или очень схожих) участков кода.
-// В вашем арсенале есть: 1) вынесение участков кода в отдельные ф-и ... различающиеся части передаются параметрами
-// 2) тернарный оператор условие ? выражение1 : выражение2
-// 3) изменение порядка if'ов
+void Messenger(char* name1, char* name2);
 
 int main(int argc, char* argv[]){
 	char *name1 = "aaa.fifo";
 	char *name2 = "a.fifo";
-	int fd[2]; 
 	mknod(name1, S_IFIFO | 0666, 0);
         mknod(name2, S_IFIFO | 0666, 0);
 	if(atoi(argv[1]) == 0){
-		pid_t pid = fork();
-		if (pid == 0){
-			char input[MaxSize] = {};
-	                char output[MaxSize] = {};
-			if ((fd[0] = open(name1, O_WRONLY)) < 0){
-				printf("Cannot open FIFO for Writing");
-				exit(-1);
-			}
-			while(1){
-				fgets(input, MaxSize, stdin);
-				write(fd[0], input, MaxSize); 	
-			}
-		} else {
-			char input[MaxSize] = {};
-                	char output[MaxSize] = {};
-			if((fd[1] = open(name2, O_RDONLY)) < 0){
-                        	printf("Cannot open FIFO for Reading");
-                        	exit(-1);
-			}
-			while(1){
-				read(fd[1], output, MaxSize);
-				printf("%s", output);
-			}
-		}
+		Messenger(name1, name2);
 	}
 	if(atoi(argv[1]) == 1){
-            	pid_t pid = fork();
-            	if (pid == 0){
-			char input[MaxSize] = {};
-                	char output[MaxSize] = {};
-                        if ((fd[0] = open(name2, O_WRONLY)) < 0){
+		Messenger(name2, name1);
+	}
+	return 0;
+}
+
+void Messenger(char* name1, char* name2){
+	int fd[2];
+	pid_t pid = fork();
+                if (pid == 0){
+                        char input[MaxSize] = {};
+                        char output[MaxSize] = {};
+                        if ((fd[0] = open(name1, O_WRONLY)) < 0){
                                 printf("Cannot open FIFO for Writing");
                                 exit(-1);
-			}
-        	while(1){
-                        fgets(input, MaxSize, stdin);
-                        write(fd[0], input, MaxSize);            
-                	}
+                        }
+                        while(1){
+                                fgets(input, MaxSize, stdin);
+                                write(fd[0], input, MaxSize);   
+                        }
                 } else {
-			char input[MaxSize] = {};   	
-			char output[MaxSize] = {};
-                        if((fd[1] = open(name1, O_RDONLY)) < 0){
+                        char input[MaxSize] = {};
+                        char output[MaxSize] = {};
+                        if((fd[1] = open(name2, O_RDONLY)) < 0){
                                 printf("Cannot open FIFO for Reading");
                                 exit(-1);
                         }
-                        while(1){	
+                        while(1){
                                 read(fd[1], output, MaxSize);
-                        	printf("%s", output);	
+                                printf("%s", output);
                         }
                 }
+        }
 
-	}
-	
-	return 0;
-}
