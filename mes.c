@@ -9,6 +9,10 @@
 
 #define MaxSize 1024
 
+// FIXIT: 1) в названии ф-и должен фигурировать глагол: startMessanger, например
+// 2) нужно придумать какие-то более "говорящие" имена для переменных name1, name2 ... возможно что-то вроде fileToWrite, fileToRead
+// 3) у вас кое-где лишний раз объявлены массивы input, output (достаточно только один иметь)
+
 void Messenger(char* name1, char* name2);
 
 int main(int argc, char* argv[]){
